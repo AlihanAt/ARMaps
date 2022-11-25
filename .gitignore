@@ -80,6 +80,6 @@ crashlytics-build.properties
 /NuGet/*
 !/NuGet/BuildSource.proj
 /MRTKBuild/
-/MSBuild/
+[Aa]ssets/MRTK/Tools/MSBuild/
 /PackagesCopy/
 !/scripts/Packaging/NuGetRestoreProject.csproj
