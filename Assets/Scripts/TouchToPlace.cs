@@ -9,10 +9,9 @@ public class TouchToPlace : MonoBehaviour
     [SerializeField] private ARRaycastManager _raycastManager;
     [SerializeField] private ARPoseDriver _poseDriver;
     [SerializeField] private TR _trackableType = TR.PlaneEstimated;
-    [SerializeField] private GameObject _cube;
+    [SerializeField] private GameObject _objectToPlace;
     private List<ARRaycastHit> _hits = new List<ARRaycastHit>();
     private GameObject _go;
-
 
     void Update()
     {
@@ -31,7 +30,7 @@ public class TouchToPlace : MonoBehaviour
                 if(_go == null)
                 {
                     Debug.Log("Object Instantiate");
-                    _go = Instantiate(_cube, hitPose.position, Quaternion.identity);
+                    _go = Instantiate(_objectToPlace, hitPose.position, Quaternion.identity);
                 }
                 else
                 {
@@ -39,7 +38,8 @@ public class TouchToPlace : MonoBehaviour
                     _go.transform.position = hitPose.position;
                 }
 
-                Debug.Log("Object Pos: " + _go.transform.position + ", User Pos: " + _poseDriver.transform.position);
+                if (_poseDriver != null)
+                    Debug.Log("Object Pos: " + _go.transform.position + ", User Pos: " + _poseDriver.transform.position);
             }
         }
     }
