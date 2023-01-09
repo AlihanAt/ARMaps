@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 1273834949}
   - component: {fileID: 3426115576001047313}
   - component: {fileID: 4678581287776936978}
+  - component: {fileID: 2057469521}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -87,7 +88,7 @@ MonoBehaviour:
   _center:
     _latitude: 52.516284
     _longitude: 13.377559
-  _zoomLevel: 19
+  _zoomLevel: 18.56
   _minimumZoomLevel: 1
   _maximumZoomLevel: 20
   _mapTerrainType: 0
@@ -184,8 +185,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.3982025, z: 1}
-  m_Center: {x: 0, y: 0.19910125, z: 0}
+  m_Size: {x: 1, y: 0.32150456, z: 1}
+  m_Center: {x: 0, y: 0.16075228, z: 0}
 --- !u!114 &1273834946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588239920756772207}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16b1021f9cb8215439219e0216e34c1b, type: 3}
   m_Name: 
@@ -356,6 +357,18 @@ MonoBehaviour:
   additionalOffset: {x: 0, y: 0, z: 0}
   additionalRotation: {x: 0, y: 0, z: 0}
   updateSolvers: 1
+--- !u!114 &2057469521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588239920756772207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0f2578d4a23f44aaa28b107c59aedc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6898044784682855098
 GameObject:
   m_ObjectHideFlags: 0

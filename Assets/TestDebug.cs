@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class TestDebug : MonoBehaviour
 {
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-        
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
+    //wird aktuell auf resizeMapButton im NearSettingsMenu genutzt
 
     public void DebugOnHandPressTouched()
     {

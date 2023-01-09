@@ -88,6 +88,7 @@ public class MapRaycastProvider : BaseCoreSystem, IMixedRealityRaycastProvider
             hitInfo.point = mapRendererHitInfo.Point;
             hitInfo.normal = mapRendererHitInfo.Normal;
             hitInfo.transform = closestMapRenderer.transform;
+            //Debug.Log("Testtt");
             return true;
         }
         else

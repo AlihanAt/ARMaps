@@ -172,14 +172,17 @@ public class MixedRealityMapInteractionHandler : MapInteractionHandler, IMixedRe
                 }
                 else
                 {
+                    //hier wenn einzelner click
+                    //auch wenn nur gehalten wird (ohne bewegen/ziehen)
+                    Debug.Log("one click");
                     _lastClickTime = Time.time;
+                    
                 }
             }
             else
             {
                 _lastClickTime = float.MinValue;
             }
-
             eventData.Use();
         }
     }
@@ -210,6 +213,7 @@ public class MixedRealityMapInteractionHandler : MapInteractionHandler, IMixedRe
     {
         if (_pointer == eventData.Pointer)
         {
+            Debug.Log("Test Drag");
             // Raycast an imaginary plane orignating from the updated _targetPointInLocalSpace.
             var rayPositionInMapLocalSpace = MapRenderer.transform.InverseTransformPoint(_pointer.Position);
             var rayDirectionInMapLocalSpace = MapRenderer.transform.InverseTransformDirection(_pointer.Rotation * Vector3.forward).normalized;
