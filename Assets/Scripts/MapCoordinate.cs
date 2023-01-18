@@ -6,15 +6,20 @@ using Microsoft.Geospatial;
 [RequireComponent(typeof(MapRenderer))]
 public class MapCoordinate : MonoBehaviour
 {
+    [SerializeField] private GameObject _placePinButton;
+
     private MapRenderer _mapRenderer;
+    private MapPinTest _mapPinTest;
 
     public void Awake()
     {
         _mapRenderer = GetComponent<MapRenderer>();
+        _mapPinTest = GetComponent<MapPinTest>();
         Debug.Assert(_mapRenderer != null);
     }
 
-    //wo wird das nochmal genutzt? vergessen, rip
+    //ein event in interactionhandler und touchinteractionhandler
+    //bei MapInteractionController Component beim Event reinziehen
     public async void OnTapAndHold(LatLonAlt latLonAlt)
     {
         if (ReferenceEquals(MapSession.Current, null) || string.IsNullOrEmpty(MapSession.Current.DeveloperKey))
@@ -32,6 +37,9 @@ public class MapCoordinate : MonoBehaviour
         {
             formattedAddressString = finderResult.Locations[0].Address.FormattedAddress;
         }
+
+        _mapPinTest.AddPinToLocation(latLonAlt.LatLon);
+
 
         Debug.Log(latLonAlt.LatLon);
     }

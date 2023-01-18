@@ -23,8 +23,9 @@ GameObject:
   - component: {fileID: 1273834949}
   - component: {fileID: 3426115576001047313}
   - component: {fileID: 4678581287776936978}
-  - component: {fileID: 2057469521}
   - component: {fileID: 1439707753}
+  - component: {fileID: 6256375457503692376}
+  - component: {fileID: 1439707746}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -113,7 +114,7 @@ MonoBehaviour:
     _list:
     - {fileID: 6811933746191081225}
   _hideTileLayerComponents: 0
-  _mapColliderType: 2
+  _mapColliderType: 1
   _mapCollider: {fileID: 9111053623045641636}
 --- !u!114 &7605555840374799901
 MonoBehaviour:
@@ -186,8 +187,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.32150456, z: 1}
-  m_Center: {x: 0, y: 0.16075228, z: 0}
+  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!114 &1273834946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,8 +231,8 @@ MonoBehaviour:
   _onTapAndHold:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057469521}
-        m_TargetAssemblyTypeName: MapCoordinate, Assembly-CSharp
+      - m_Target: {fileID: 6256375457503692376}
+        m_TargetAssemblyTypeName: ReverseGeocodeOnClick, Assembly-CSharp
         m_MethodName: OnTapAndHold
         m_Mode: 0
         m_Arguments:
@@ -370,18 +371,6 @@ MonoBehaviour:
   additionalOffset: {x: 0, y: 0, z: 0}
   additionalRotation: {x: 0, y: 0, z: 0}
   updateSolvers: 1
---- !u!114 &2057469521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588239920756772207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a0f2578d4a23f44aaa28b107c59aedc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1439707753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +386,38 @@ MonoBehaviour:
   _mapRenderer: {fileID: 2183414062625141605}
   _placeMapButton: {fileID: 0}
   _resizeMapButton: {fileID: 0}
+--- !u!114 &6256375457503692376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588239920756772207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb95ad8fc09cd9438e5c1dd69e95f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapPinLayer: {fileID: 1439707746}
+  _mapButtonPinPrefab: {fileID: 2298666145408718127, guid: c82114fd7eca564489350dadc59fb78e, type: 3}
+--- !u!114 &1439707746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588239920756772207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8a6459eb3010b4f9751de03dca135a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layerName: MapPinLayer
+  _mapPins:
+    _list: []
+  _isClusteringEnabled: 1
+  _clusterThreshold: 5
+  _clusterMapPinPrefab: {fileID: 114898586744110094, guid: f433f0b8c66e0634281c71fbc53f1e94, type: 3}
 --- !u!1 &6898044784682855098
 GameObject:
   m_ObjectHideFlags: 0

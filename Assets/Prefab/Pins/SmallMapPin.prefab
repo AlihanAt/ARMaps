@@ -271,7 +271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8395409773937531735
 Transform:
   m_ObjectHideFlags: 0
@@ -300,8 +300,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _location:
-    _latitude: 0
-    _longitude: 0
+    _latitude: 52.5160956359275
+    _longitude: 13.3775844306443
   _altitude: 0
   _altitudeReference: 2
   _isLayerSynchronized: 1
