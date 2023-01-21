@@ -29,10 +29,6 @@ public class ReverseGeocodeOnClick : MonoBehaviour
         _mapRenderer = GetComponent<MapRenderer>();
         Debug.Assert(_mapRenderer != null);
         Debug.Assert(_mapPinLayer != null);
-
-        _mapButtonPinGO = Instantiate(_mapButtonPinPrefab);
-        _mapPinLayer.MapPins.Add(_mapButtonPinGO);
-        _mapButtonPinGO.gameObject.SetActive(false);
     }
 
     //ein event in interactionhandler und touchinteractionhandler
@@ -47,14 +43,13 @@ public class ReverseGeocodeOnClick : MonoBehaviour
             return;
         }
 
-        if (_mapButtonPinPrefab != null && _mapButtonPinGO != null)
+        if (_mapButtonPinPrefab != null)
         {
-            _mapButtonPinGO.Location = latLonAlt.LatLon;
-
-            if (!_mapPinLayer.MapPins.Contains(_mapButtonPinGO))
+            if(_mapButtonPinGO == null)
             {
-                _mapPinLayer.MapPins.Add(_mapButtonPinGO);
+                _mapButtonPinGO = Instantiate(_mapButtonPinPrefab, this.gameObject.transform);
             }
+            _mapButtonPinGO.Location = latLonAlt.LatLon;
         }
     }
 }

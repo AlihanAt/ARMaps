@@ -16,10 +16,11 @@ public class PlaceActualPin : MonoBehaviour
     private void Start()
     {
         GameObject map = GameObject.Find("Map");
-        _mapPinLayer = map.GetComponent<MapPinLayer>();    
+        _mapPinLayer = map.GetComponent<MapPinLayer>();
         _buttonPin = GetComponent<MapPin>();
     }
 
+    //Button click
     public void ReplacePin()
     {
         if (_mapPinLayer != null)
@@ -27,7 +28,8 @@ public class PlaceActualPin : MonoBehaviour
             var newPin = Instantiate(_actualPin);
             newPin.Location = _buttonPin.Location;
             _mapPinLayer.MapPins.Add(newPin);
-            _mapPinLayer.MapPins.Remove(_buttonPin);
+            //_mapPinLayer.MapPins.Remove(_buttonPin);
+            Destroy(this.gameObject);
         }
         else
             Debug.LogError("Error: No Map/MapPinLayer!");
