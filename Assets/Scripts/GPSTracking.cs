@@ -106,6 +106,18 @@ public class GPSTracking : MonoBehaviour
         return total_dist;
     }
 
+    public double CalculateBearing(float lat1, float lon1, float lat2, float lon2)
+    {
+        var dLon = Mathf.Deg2Rad * (lon2 - lon1);
+        var dPhi = Mathf.Log(Mathf.Tan((Mathf.Deg2Rad * lat2) / (2 + Mathf.PI / 4)) / Mathf.Tan((Mathf.Deg2Rad * lat1) / (2 + Mathf.PI / 4)));
+        if (Mathf.Abs(dLon) > Mathf.PI) 
+            dLon = dLon > 0 ? -(2 * Mathf.PI - dLon) : (2 * Mathf.PI + dLon);
+
+        var bearing = Mathf.Rad2Deg * Mathf.Atan2(dLon, dPhi);
+        Debug.Log("Winkel: " + bearing);
+        return bearing;
+    }
+
     private void ShowOwnPosition()
     {
         var pos = TEST_GPS_VALUES;
