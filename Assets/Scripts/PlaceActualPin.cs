@@ -28,7 +28,6 @@ public class PlaceActualPin : MonoBehaviour
             var newPin = Instantiate(_actualPin);
             newPin.Location = _buttonPin.Location;
             _mapPinLayer.MapPins.Add(newPin);
-            //_mapPinLayer.MapPins.Remove(_buttonPin);
             Destroy(this.gameObject);
         }
         else

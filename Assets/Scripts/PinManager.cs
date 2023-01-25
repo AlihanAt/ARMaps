@@ -8,19 +8,20 @@ public class PinManager : MonoBehaviour
 {
     [SerializeField] private MapPinLayer _mapPinLayer;
     [SerializeField] private GPSTracking _gpsTracking;
+    [SerializeField] private GameObject _pinParent;
     [SerializeField] private GameObject _pinObject;
     [SerializeField] private List<MapPin> _pinInRangeList = new List<MapPin>();
     private List<MapPin> _placedPinList = new List<MapPin>();
     private Dictionary<MapPin, GameObject> _pinInRangeMap = new Dictionary<MapPin, GameObject>();
 
-    private readonly int _loadingRange = 20;
+    private readonly int _loadingRange = 100;
 
     private readonly float _resetTime = 1f;
     private float _time = 1f;
 
     void Update()
     {
-       _time -= Time.deltaTime;
+        _time -= Time.deltaTime;
         if (_time < 0)
         {
             PinRangeCheck();
@@ -28,38 +29,19 @@ public class PinManager : MonoBehaviour
         }
     }
 
-    private void ShowPins()
-    {
-        foreach(MapPin pin in _pinInRangeList)
-        {
-            if (!_placedPinList.Contains(pin))
-            {
-                var placedPin = Instantiate(_pinObject);
-                _placedPinList.Add(pin);
-            }
-        }
-    }
-
-    private void HidePins()
-    {
-        foreach (MapPin pin in _mapPinLayer.MapPins)
-        {
-            //if (!_placedPinList.Contains(pin))
-
-        }
-
-    }
-
     private void PinRangeCheck()
     {
         foreach (MapPin pin in _mapPinLayer.MapPins)
         {
-            if (_gpsTracking.CalculateDistanceTo(pin.Location) < _loadingRange)
+            var distance = _gpsTracking.CalculateDistanceTo(pin.Location);
+            if ( distance < _loadingRange)
             {
+                var bearing = _gpsTracking.CalculateBearingTo(pin.Location);
                 if (!_pinInRangeList.Contains(pin))
                 {
-                    AddPin(pin);
+                    AddPin(pin, distance, bearing);
                 }
+                UpdatePin(pin, distance, bearing);
             }
             else
             {
@@ -71,12 +53,23 @@ public class PinManager : MonoBehaviour
         }
     }
 
-    private void AddPin(MapPin pin)
+    private void UpdatePin(MapPin pin, float distance, double bearing)
     {
+        _pinInRangeMap.TryGetValue(pin, out GameObject pinToUpdate);
+        Debug.Log("parten rotation: " + _pinParent.transform.rotation.y);
+        var vector = Quaternion.Euler(0, (float) bearing - _pinParent.transform.rotation.y, 0) * Vector3.forward * distance;
+        pinToUpdate.transform.position = vector + _pinParent.transform.position;
+    }
+
+    private void AddPin(MapPin pin, float distance, double bearing)
+    {
+        var tmpPin = Instantiate(_pinObject, _pinParent.transform);
+        var vector = Quaternion.Euler(0, (float)bearing, 0) * Vector3.forward * distance;
+        tmpPin.transform.position = vector;
+
         _pinInRangeList.Add(pin);
-        var tmpPin = Instantiate(_pinObject);
         _pinInRangeMap.Add(pin, tmpPin);
-        Debug.Log("Pin added");
+        Debug.Log("Pin added at " + pin.Location);
     }
 
     private void RemovePin(MapPin pin)

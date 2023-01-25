@@ -78,20 +78,6 @@ public class GPSTracking : MonoBehaviour
 //https://answers.unity.com/questions/1221259/how-to-get-distance-from-2-locations-with-unity-lo.html
 //erst beide lat, dann long
 //in meters
-    public float CalculateDistance(float lat_1, float lat_2, float long_1, float long_2)
-    {
-        int R = 6371;
-        var lat_rad_1 = Mathf.Deg2Rad * lat_1;
-        var lat_rad_2 = Mathf.Deg2Rad * lat_2;
-        var d_lat_rad = Mathf.Deg2Rad * (lat_2 - lat_1);
-        var d_long_rad = Mathf.Deg2Rad * (long_2 - long_1);
-        var a = Mathf.Pow(Mathf.Sin(d_lat_rad / 2), 2) + (Mathf.Pow(Mathf.Sin(d_long_rad / 2), 2) * Mathf.Cos(lat_rad_1) * Mathf.Cos(lat_rad_2));
-        var c = 2 * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1 - a));
-        var total_dist = R * c * 1000; // convert to meters
-        Debug.Log("Calced Distance: " + total_dist);
-        return total_dist;
-    }
-
     public float CalculateDistanceTo(LatLon target)
     {
         int R = 6371;
@@ -106,17 +92,22 @@ public class GPSTracking : MonoBehaviour
         return total_dist;
     }
 
-    public double CalculateBearing(float lat1, float lon1, float lat2, float lon2)
+    //https://stackoverflow.com/questions/2042599/direction-between-2-latitude-longitude-points-in-c-sharp
+    public double CalculateBearingTo(LatLon target)
     {
-        var dLon = Mathf.Deg2Rad * (lon2 - lon1);
-        var dPhi = Mathf.Log(Mathf.Tan((Mathf.Deg2Rad * lat2) / (2 + Mathf.PI / 4)) / Mathf.Tan((Mathf.Deg2Rad * lat1) / (2 + Mathf.PI / 4)));
-        if (Mathf.Abs(dLon) > Mathf.PI) 
+        float dLon = Mathf.Deg2Rad * (float) (target.LongitudeInDegrees - _currentPos.LongitudeInDegrees);
+        float dPhi = Mathf.Log(Mathf.Tan((Mathf.Deg2Rad * (float) target.LatitudeInDegrees) / (2 + Mathf.PI / 4)) / Mathf.Tan((Mathf.Deg2Rad * (float) _currentPos.LatitudeInDegrees) / (2 + Mathf.PI / 4)));
+        if (Mathf.Abs(dLon) > Mathf.PI)
             dLon = dLon > 0 ? -(2 * Mathf.PI - dLon) : (2 * Mathf.PI + dLon);
 
         var bearing = Mathf.Rad2Deg * Mathf.Atan2(dLon, dPhi);
+        if (bearing < 0)
+            bearing += 360;
+
         Debug.Log("Winkel: " + bearing);
         return bearing;
     }
+
 
     private void ShowOwnPosition()
     {
@@ -127,7 +118,7 @@ public class GPSTracking : MonoBehaviour
 
     private void SetMyPosition()
     {
-        _playerPin.Location = new LatLon(52.421261, 13.427373);
+        _playerPin.Location = TEST_GPS_VALUES;
     }
 
     public LatLon GetCurrentPos()
