@@ -14,7 +14,7 @@ public class PinManager : MonoBehaviour
     private List<MapPin> _pinInRangeList = new List<MapPin>();
     private Dictionary<MapPin, GameObject> _pinInRangeMap = new Dictionary<MapPin, GameObject>();
 
-    private readonly int _loadingRange = 100;
+    private readonly int _loadingRange = 10;
 
     private readonly float _resetTime = 0.1f;
     private float _time;

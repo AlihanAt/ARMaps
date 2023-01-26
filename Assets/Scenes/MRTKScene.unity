@@ -568,7 +568,6 @@ GameObject:
   - component: {fileID: 240643290}
   - component: {fileID: 240643289}
   - component: {fileID: 240643288}
-  - component: {fileID: 240643294}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -583,12 +582,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240643287}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa17d122634046b4a8e23048891fafc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ab0e80cee9cc1d44928bfe488dd1e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RaycastPrefab: {fileID: 0}
+  m_PointCloudPrefab: {fileID: 0}
 --- !u!114 &240643289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,12 +595,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240643287}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 1433165010469909023, guid: 017d21ca3904dd9408576202a1cd53e8, type: 3}
+  m_PlanePrefab: {fileID: 0}
   m_DetectionMode: 1
 --- !u!114 &240643290
 MonoBehaviour:
@@ -630,22 +629,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &240643294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 240643287}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 999b839c47692fa409fb6610f7275d43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _raycastManager: {fileID: 240643288}
-  _poseDriver: {fileID: 0}
-  _trackableType: 8
-  _objectToPlace: {fileID: 1588239920756772207, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
 --- !u!1 &557471828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,7 +1427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3469732454616985372, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.063520834
+      value: 0.10005223
       objectReference: {fileID: 0}
     - target: {fileID: 3473123152546153868, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
       propertyPath: m_RootOrder

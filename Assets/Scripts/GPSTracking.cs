@@ -20,13 +20,13 @@ public class GPSTracking : MonoBehaviour
 
     void Awake()
     {
-        _mapRenderer = GameObject.Find("Map").GetComponent<MapRenderer>();
         _tmpLat = TEST_GPS_VALUES.LatitudeInDegrees;
         _tmpLon = TEST_GPS_VALUES.LongitudeInDegrees;
     }
 
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown("w"))
         {
             _tmpLat += 0.00005;
@@ -43,14 +43,13 @@ public class GPSTracking : MonoBehaviour
         {
             _tmpLon += 0.00005;
         }
-        _currentPos = new LatLon(_tmpLat, _tmpLon);
+#endif
     }
 
     IEnumerator Start()
     {
 #if UNITY_EDITOR
-        SetMyPosition();
-        //ShowOwnPosition();
+        SetMyTestPosition();
         StartCoroutine(UpdateGPS());
         StartCoroutine(HoldMapOnPlayerPin());
 #endif
@@ -88,19 +87,22 @@ public class GPSTracking : MonoBehaviour
             _currentPos = new LatLon(Input.location.lastData.latitude, Input.location.lastData.longitude);
             _debugtext.text = "Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp;
             Debug.LogWarning(_currentPos);
+            StartCoroutine(UpdateGPS());
+            StartCoroutine(HoldMapOnPlayerPin());
         }
-
-        //hier später aktivieren
-        //SetMyPosition();
-        //StartCoroutine(UpdateGPS());
-        //StartCoroutine(HoldMapOnPlayerPin());
     }
 
     IEnumerator UpdateGPS()
     {
         while (true)
         {
-            //_currentPos = new LatLon(Input.location.lastData.latitude, Input.location.lastData.longitude);
+#if UNITY_ANDROID && !UNITY_EDITOR
+            Debug.Log("UNITY_ANDROID && !UNITY_EDITOR");
+            _currentPos = new LatLon(Input.location.lastData.latitude, Input.location.lastData.longitude);
+#endif
+#if UNITY_EDITOR
+            _currentPos = new LatLon(_tmpLat, _tmpLon);
+#endif
             _playerPin.Location = _currentPos;
             yield return new WaitForSeconds(_gpsUpdateTimer);
         }
@@ -115,10 +117,10 @@ public class GPSTracking : MonoBehaviour
         }
     }
 
-    private void SetMyPosition()
+    private void SetMyTestPosition()
     {
-        _playerPin.Location = TEST_GPS_VALUES;
         _currentPos = TEST_GPS_VALUES;
+        _playerPin.Location = _currentPos;
     }
 
     public float CalculateDistanceTo(LatLon target)
@@ -133,7 +135,6 @@ public class GPSTracking : MonoBehaviour
         var a = Mathf.Pow(Mathf.Sin(d_lat_rad / 2), 2) + (Mathf.Pow(Mathf.Sin(d_long_rad / 2), 2) * Mathf.Cos(lat_rad_1) * Mathf.Cos(lat_rad_2));
         var c = 2 * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1 - a));
         var total_dist = R * c * 1000; // convert to meters
-        Debug.Log("Calced Distance: " + total_dist);
         return total_dist;
     }
 
@@ -150,7 +151,6 @@ public class GPSTracking : MonoBehaviour
         if (bearing < 0)
             bearing += 360;
 
-        Debug.Log("Winkel: " + bearing);
         return bearing;
     }
 
