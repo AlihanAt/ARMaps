@@ -7,30 +7,53 @@ using UnityEngine;
 public class GPSTracking : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _debugtext;
-    
-    private string _currentPosString;
-    private LatLon _currentPos;
-
-    private MapRenderer _map;
-    
+    [SerializeField] private MapRenderer _mapRenderer;
     [SerializeField] private MapPin _playerPin;
+
+    private LatLon _currentPos;
+    private float _gpsUpdateTimer = 0.3f;
 
     private LatLon TEST_GPS_VALUES;
 
+    private double _tmpLat;
+    private double _tmpLon;
+
     void Awake()
     {
-        _map = GameObject.Find("Map").GetComponent<MapRenderer>();
-        Debug.Assert(_map != null);
+        _mapRenderer = GameObject.Find("Map").GetComponent<MapRenderer>();
+        _tmpLat = TEST_GPS_VALUES.LatitudeInDegrees;
+        _tmpLon = TEST_GPS_VALUES.LongitudeInDegrees;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown("w"))
+        {
+            _tmpLat += 0.00005;
+        }
+        if (Input.GetKeyDown("a"))
+        {
+            _tmpLon -= 0.00005;
+        }
+        if (Input.GetKeyDown("s"))
+        {
+            _tmpLat -= 0.00005;
+        }
+        if (Input.GetKeyDown("d"))
+        {
+            _tmpLon += 0.00005;
+        }
+        _currentPos = new LatLon(_tmpLat, _tmpLon);
     }
 
     IEnumerator Start()
     {
-        _currentPos = TEST_GPS_VALUES;
-        ShowOwnPosition();
+#if UNITY_EDITOR
         SetMyPosition();
-
-        //Example
-        //CalculateDistance(52, 53, 13, 14);
+        //ShowOwnPosition();
+        StartCoroutine(UpdateGPS());
+        StartCoroutine(HoldMapOnPlayerPin());
+#endif
 
         if (!Input.location.isEnabledByUser)
         {
@@ -63,28 +86,50 @@ public class GPSTracking : MonoBehaviour
         else
         {
             _currentPos = new LatLon(Input.location.lastData.latitude, Input.location.lastData.longitude);
-            _currentPosString = "Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp;
+            _debugtext.text = "Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp;
             Debug.LogWarning(_currentPos);
-            _debugtext.text = _currentPosString;
         }
 
-        //ShowOwnPosition();
+        //hier später aktivieren
         //SetMyPosition();
-
-        // Stops the location service if there is no need to query location updates continuously.
-        //Input.location.Stop();
+        //StartCoroutine(UpdateGPS());
+        //StartCoroutine(HoldMapOnPlayerPin());
     }
 
-//https://answers.unity.com/questions/1221259/how-to-get-distance-from-2-locations-with-unity-lo.html
-//erst beide lat, dann long
-//in meters
+    IEnumerator UpdateGPS()
+    {
+        while (true)
+        {
+            //_currentPos = new LatLon(Input.location.lastData.latitude, Input.location.lastData.longitude);
+            _playerPin.Location = _currentPos;
+            yield return new WaitForSeconds(_gpsUpdateTimer);
+        }
+    }
+
+    private IEnumerator HoldMapOnPlayerPin()
+    {
+        while (true)
+        {
+            _mapRenderer.SetMapScene(new MapSceneOfLocationAndZoomLevel(_currentPos, _mapRenderer.ZoomLevel));
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    private void SetMyPosition()
+    {
+        _playerPin.Location = TEST_GPS_VALUES;
+        _currentPos = TEST_GPS_VALUES;
+    }
+
     public float CalculateDistanceTo(LatLon target)
     {
+        //https://answers.unity.com/questions/1221259/how-to-get-distance-from-2-locations-with-unity-lo.html
+
         int R = 6371;
-        var lat_rad_1 = Mathf.Deg2Rad * (float) _currentPos.LatitudeInDegrees;
-        var lat_rad_2 = Mathf.Deg2Rad * (float) target.LatitudeInDegrees;
-        var d_lat_rad = Mathf.Deg2Rad * (float) (target.LatitudeInDegrees - _currentPos.LatitudeInDegrees);
-        var d_long_rad = Mathf.Deg2Rad * (float) (target.LongitudeInDegrees - _currentPos.LongitudeInDegrees);
+        var lat_rad_1 = Mathf.Deg2Rad * (float)_currentPos.LatitudeInDegrees;
+        var lat_rad_2 = Mathf.Deg2Rad * (float)target.LatitudeInDegrees;
+        var d_lat_rad = Mathf.Deg2Rad * (float)(target.LatitudeInDegrees - _currentPos.LatitudeInDegrees);
+        var d_long_rad = Mathf.Deg2Rad * (float)(target.LongitudeInDegrees - _currentPos.LongitudeInDegrees);
         var a = Mathf.Pow(Mathf.Sin(d_lat_rad / 2), 2) + (Mathf.Pow(Mathf.Sin(d_long_rad / 2), 2) * Mathf.Cos(lat_rad_1) * Mathf.Cos(lat_rad_2));
         var c = 2 * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1 - a));
         var total_dist = R * c * 1000; // convert to meters
@@ -92,11 +137,12 @@ public class GPSTracking : MonoBehaviour
         return total_dist;
     }
 
-    //https://stackoverflow.com/questions/2042599/direction-between-2-latitude-longitude-points-in-c-sharp
     public double CalculateBearingTo(LatLon target)
     {
-        float dLon = Mathf.Deg2Rad * (float) (target.LongitudeInDegrees - _currentPos.LongitudeInDegrees);
-        float dPhi = Mathf.Log(Mathf.Tan((Mathf.Deg2Rad * (float) target.LatitudeInDegrees) / (2 + Mathf.PI / 4)) / Mathf.Tan((Mathf.Deg2Rad * (float) _currentPos.LatitudeInDegrees) / (2 + Mathf.PI / 4)));
+        //https://stackoverflow.com/questions/2042599/direction-between-2-latitude-longitude-points-in-c-sharp
+
+        float dLon = Mathf.Deg2Rad * (float)(target.LongitudeInDegrees - _currentPos.LongitudeInDegrees);
+        float dPhi = Mathf.Log(Mathf.Tan((Mathf.Deg2Rad * (float)target.LatitudeInDegrees) / (2 + Mathf.PI / 4)) / Mathf.Tan((Mathf.Deg2Rad * (float)_currentPos.LatitudeInDegrees) / (2 + Mathf.PI / 4)));
         if (Mathf.Abs(dLon) > Mathf.PI)
             dLon = dLon > 0 ? -(2 * Mathf.PI - dLon) : (2 * Mathf.PI + dLon);
 
@@ -108,21 +154,8 @@ public class GPSTracking : MonoBehaviour
         return bearing;
     }
 
-
-    private void ShowOwnPosition()
+    void OnDisable()
     {
-        var pos = TEST_GPS_VALUES;
-        var mapScene = new MapSceneOfLocationAndZoomLevel(pos, _map.ZoomLevel + 1f);
-        _map.SetMapScene(mapScene);
-    }
-
-    private void SetMyPosition()
-    {
-        _playerPin.Location = TEST_GPS_VALUES;
-    }
-
-    public LatLon GetCurrentPos()
-    {
-        return _currentPos;
+        Input.location.Stop();
     }
 }

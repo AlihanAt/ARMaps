@@ -1,6 +1,4 @@
 using Microsoft.Maps.Unity;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,16 +6,24 @@ public class PinManager : MonoBehaviour
 {
     [SerializeField] private MapPinLayer _mapPinLayer;
     [SerializeField] private GPSTracking _gpsTracking;
-    [SerializeField] private GameObject _pinParent;
+    [SerializeField] private GameObject _arSessionOrigin;
     [SerializeField] private GameObject _pinObject;
-    [SerializeField] private List<MapPin> _pinInRangeList = new List<MapPin>();
-    private List<MapPin> _placedPinList = new List<MapPin>();
+
+    private GameObject _mainCamera;
+
+    private List<MapPin> _pinInRangeList = new List<MapPin>();
     private Dictionary<MapPin, GameObject> _pinInRangeMap = new Dictionary<MapPin, GameObject>();
 
     private readonly int _loadingRange = 100;
 
-    private readonly float _resetTime = 1f;
-    private float _time = 1f;
+    private readonly float _resetTime = 0.1f;
+    private float _time;
+
+    private void Awake()
+    {
+        _mainCamera = _arSessionOrigin.transform.GetChild(0).gameObject; //MainCamera must be first child!!
+        _time = _resetTime;
+    }
 
     void Update()
     {
@@ -56,14 +62,13 @@ public class PinManager : MonoBehaviour
     private void UpdatePin(MapPin pin, float distance, double bearing)
     {
         _pinInRangeMap.TryGetValue(pin, out GameObject pinToUpdate);
-        Debug.Log("parten rotation: " + _pinParent.transform.rotation.y);
-        var vector = Quaternion.Euler(0, (float) bearing - _pinParent.transform.rotation.y, 0) * Vector3.forward * distance;
-        pinToUpdate.transform.position = vector + _pinParent.transform.position;
+        var vector = Quaternion.Euler(0, (float) bearing - _mainCamera.transform.rotation.y, 0) * Vector3.forward * distance;
+        pinToUpdate.transform.position = vector;
     }
 
     private void AddPin(MapPin pin, float distance, double bearing)
     {
-        var tmpPin = Instantiate(_pinObject, _pinParent.transform);
+        var tmpPin = Instantiate(_pinObject, _mainCamera.transform);
         var vector = Quaternion.Euler(0, (float)bearing, 0) * Vector3.forward * distance;
         tmpPin.transform.position = vector;
 

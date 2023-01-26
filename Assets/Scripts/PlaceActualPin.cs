@@ -1,16 +1,12 @@
 using Microsoft.Maps.Unity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MapPin))]
 public class PlaceActualPin : MonoBehaviour
 {
-    [SerializeField]
-    private MapPin _actualPin;
+    [SerializeField] private MapPin _actualPin;
 
     private MapPin _buttonPin;
-
     private MapPinLayer _mapPinLayer;
 
     private void Start()

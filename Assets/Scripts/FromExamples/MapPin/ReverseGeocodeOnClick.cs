@@ -3,8 +3,6 @@
 
 using Microsoft.Geospatial;
 using Microsoft.Maps.Unity;
-using Microsoft.Maps.Unity.Search;
-using TMPro;
 using UnityEngine;
 
 /// <summary>
