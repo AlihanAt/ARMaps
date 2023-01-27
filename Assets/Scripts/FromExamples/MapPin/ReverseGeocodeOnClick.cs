@@ -30,7 +30,7 @@ public class ReverseGeocodeOnClick : MonoBehaviour
     }
 
     //ein event in interactionhandler und touchinteractionhandler
-    //bei MapInteractionController Component beim Event reinziehen
+    //beim MapInteractionController Component ins Event reinziehen
     public void OnTapAndHold(LatLonAlt latLonAlt)
     {
         if (ReferenceEquals(MapSession.Current, null) || string.IsNullOrEmpty(MapSession.Current.DeveloperKey))

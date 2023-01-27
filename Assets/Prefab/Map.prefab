@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 1439707753}
   - component: {fileID: 6256375457503692376}
   - component: {fileID: 1439707746}
+  - component: {fileID: 4850451424076126827}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -89,15 +90,15 @@ MonoBehaviour:
   _numElevationTileFallbackLods: 2
   _requestTilesAroundView: 1
   _center:
-    _latitude: 52.516284
-    _longitude: 13.377559
+    _latitude: 52.421261
+    _longitude: 13.427373
   _zoomLevel: 18.56
   _minimumZoomLevel: 1
   _maximumZoomLevel: 20
   _mapTerrainType: 0
   _mapShape: 1
   _localMapDimension: {x: 1, y: 1}
-  _localMapRadius: 0.5
+  _localMapRadius: 1.5
   _localMapBaseHeight: 0.1
   _elevationScale: 1
   _castShadows: 1
@@ -188,7 +189,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Size: {x: 3, y: 0.1, z: 3}
   m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!114 &1273834946
 MonoBehaviour:
@@ -260,7 +261,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588239920756772207}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f70a1e09fe21de459df78f429e5241c, type: 3}
   m_Name: 
@@ -314,10 +315,10 @@ MonoBehaviour:
   onPlacingStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1854551981905462757}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 4850451424076126827}
+        m_TargetAssemblyTypeName: InteractionHandlerManager, Assembly-CSharp
+        m_MethodName: DisableInteractionHandler
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -341,10 +342,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1854551981905462757}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 4850451424076126827}
+        m_TargetAssemblyTypeName: InteractionHandlerManager, Assembly-CSharp
+        m_MethodName: EnableInteractionHandler
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -419,6 +420,20 @@ MonoBehaviour:
   _isClusteringEnabled: 1
   _clusterThreshold: 5
   _clusterMapPinPrefab: {fileID: 114898586744110094, guid: f433f0b8c66e0634281c71fbc53f1e94, type: 3}
+--- !u!114 &4850451424076126827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588239920756772207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf333b2f20aa5341a46834fa7c94582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _editorHandler: {fileID: 1854551981905462757}
+  _touchHandler: {fileID: 1273834949}
 --- !u!1 &6898044784682855098
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,10 +574,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1854551981905462757}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 4850451424076126827}
+        m_TargetAssemblyTypeName: InteractionHandlerManager, Assembly-CSharp
+        m_MethodName: EnableInteractionHandler
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -614,10 +629,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1854551981905462757}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 4850451424076126827}
+        m_TargetAssemblyTypeName: InteractionHandlerManager, Assembly-CSharp
+        m_MethodName: EnableInteractionHandler
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -754,7 +769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8320035924939369838, guid: e3bcc32b58a8fe04a9c0d3a40df62462, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.099999994
       objectReference: {fileID: 0}
     - target: {fileID: 8320035924939369838, guid: e3bcc32b58a8fe04a9c0d3a40df62462, type: 3}
       propertyPath: m_LocalPosition.z
