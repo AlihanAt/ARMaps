@@ -38,6 +38,9 @@ public class MixedRealityMapInteractionHandler : MapInteractionHandler, IMixedRe
     [Range(0, 1)]
     private float _panSmoothness = 0.5f;
 
+    [SerializeField]
+    private GPSTracking _gpsTracking;
+
     private void OnEnable()
     {
         if (CoreServices.InputSystem != null)
@@ -55,13 +58,14 @@ public class MixedRealityMapInteractionHandler : MapInteractionHandler, IMixedRe
             CoreServices.InputSystem.FocusProvider.TryGetFocusDetails(_pointer, out var focusDetails) &&
             focusDetails.Object == gameObject)
         {
+            _gpsTracking.FocusPlayer(false);
+
             // The current point the ray is targeting has been calculated in OnPointerDragged. Smooth it here.
             var panSmoothness = Mathf.Lerp(0.0f, 0.5f, _panSmoothness);
             _smoothedPointInLocalSpace = DynamicExpDecay(_smoothedPointInLocalSpace, _currentPointInLocalSpace, panSmoothness);
 
             // Reconstruct ray from pointer position to focus details.
             var rayTargetPoint = MapRenderer.transform.TransformPoint(_smoothedPointInLocalSpace);
-            //Debug.Log("raytargetpos: " + rayTargetPoint + ", das andere: " + (rayTargetPoint - _pointer.Position).normalized);
             var ray = new Ray(_pointer.Position, (rayTargetPoint - _pointer.Position).normalized);
             MapInteractionController.PanAndZoom(ray, _targetPointInMercator, _targetAltitudeInMeters, ComputeZoomToApply());
 
@@ -73,7 +77,6 @@ public class MixedRealityMapInteractionHandler : MapInteractionHandler, IMixedRe
             focusDetails.Point = MapRenderer.transform.TransformPoint(_targetPointInLocalSpace);
             focusDetails.PointLocalSpace = _targetPointInLocalSpace;
             CoreServices.InputSystem.FocusProvider.TryOverrideFocusDetails(_pointer, focusDetails);
-            //Debug.Log("targetpointinlocalspace: " + _targetPointInLocalSpace + ", focusdetails.point" + focusDetails.Point);
 
             // Reset timings used for tap-and-hold and double tap.
             _lastPointerDownTime = float.MaxValue;
@@ -176,7 +179,6 @@ public class MixedRealityMapInteractionHandler : MapInteractionHandler, IMixedRe
                 {
                     //hier wenn einzelner click
                     //auch wenn nur gehalten wird (ohne bewegen/ziehen)
-                    //Debug.Log("one click");
                     _lastClickTime = Time.time;
                     
                 }
@@ -215,7 +217,6 @@ public class MixedRealityMapInteractionHandler : MapInteractionHandler, IMixedRe
     {
         if (_pointer == eventData.Pointer)
         {
-            //Debug.Log("Test Drag");
             // Raycast an imaginary plane orignating from the updated _targetPointInLocalSpace.
             var rayPositionInMapLocalSpace = MapRenderer.transform.InverseTransformPoint(_pointer.Position);
             var rayDirectionInMapLocalSpace = MapRenderer.transform.InverseTransformDirection(_pointer.Rotation * Vector3.forward).normalized;

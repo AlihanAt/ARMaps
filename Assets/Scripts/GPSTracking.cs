@@ -13,6 +13,9 @@ public class GPSTracking : MonoBehaviour
     private LatLon _currentPos;
     private float _gpsUpdateTimer = 0.3f;
 
+    private bool _focusPlayer = true;
+    private bool _focussing;
+
     private LatLon TEST_GPS_VALUES;
 
     private double _tmpLat;
@@ -51,7 +54,7 @@ public class GPSTracking : MonoBehaviour
 #if UNITY_EDITOR
         SetMyTestPosition();
         StartCoroutine(UpdateGPS());
-        StartCoroutine(HoldMapOnPlayerPin());
+        StartCoroutine(FocusMapOnPlayerPin());
 #endif
 
         if (!Input.location.isEnabledByUser)
@@ -88,7 +91,7 @@ public class GPSTracking : MonoBehaviour
             _debugtext.text = "Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp;
             Debug.LogWarning(_currentPos);
             StartCoroutine(UpdateGPS());
-            StartCoroutine(HoldMapOnPlayerPin());
+            StartCoroutine(FocusMapOnPlayerPin());
         }
     }
 
@@ -108,12 +111,24 @@ public class GPSTracking : MonoBehaviour
         }
     }
 
-    private IEnumerator HoldMapOnPlayerPin()
+    private IEnumerator FocusMapOnPlayerPin()
     {
-        while (true)
+        _focussing = true;
+        while (_focusPlayer)
         {
             _mapRenderer.SetMapScene(new MapSceneOfLocationAndZoomLevel(_currentPos, _mapRenderer.ZoomLevel));
             yield return new WaitForSeconds(1);
+        }
+        _focussing = false;
+    }
+
+    public void FocusPlayer(bool focus)
+    {
+        _focusPlayer = focus;
+        
+        if(!_focussing && focus)
+        {
+            StartCoroutine(FocusMapOnPlayerPin());
         }
     }
 
