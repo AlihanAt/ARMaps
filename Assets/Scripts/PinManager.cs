@@ -6,22 +6,19 @@ public class PinManager : MonoBehaviour
 {
     [SerializeField] private MapPinLayer _mapPinLayer;
     [SerializeField] private GPSTracking _gpsTracking;
-    [SerializeField] private GameObject _arSessionOrigin;
+    [SerializeField] private GameObject _pinParent;
     [SerializeField] private GameObject _pinObject;
-
-    private GameObject _mainCamera;
-
+    
     private List<MapPin> _pinInRangeList = new List<MapPin>();
     private Dictionary<MapPin, GameObject> _pinInRangeMap = new Dictionary<MapPin, GameObject>();
 
-    private readonly int _loadingRange = 10;
+    private readonly int _loadingRange = 5;
 
     private readonly float _resetTime = 0.1f;
     private float _time;
 
     private void Awake()
     {
-        _mainCamera = _arSessionOrigin.transform.GetChild(0).gameObject; //MainCamera must be first child!!
         _time = _resetTime;
     }
 
@@ -47,7 +44,7 @@ public class PinManager : MonoBehaviour
                 {
                     AddPin(pin, distance, bearing);
                 }
-                UpdatePin(pin, distance, bearing);
+                //UpdatePin(pin, distance, bearing);
             }
             else
             {
@@ -62,13 +59,13 @@ public class PinManager : MonoBehaviour
     private void UpdatePin(MapPin pin, float distance, double bearing)
     {
         _pinInRangeMap.TryGetValue(pin, out GameObject pinToUpdate);
-        var vector = Quaternion.Euler(0, (float) bearing - _mainCamera.transform.rotation.y, 0) * Vector3.forward * distance;
+        var vector = Quaternion.Euler(0, (float) bearing - _pinParent.transform.rotation.y, 0) * Vector3.forward * distance;
         pinToUpdate.transform.position = vector;
     }
 
     private void AddPin(MapPin pin, float distance, double bearing)
     {
-        var tmpPin = Instantiate(_pinObject, _mainCamera.transform);
+        var tmpPin = Instantiate(_pinObject, _pinParent.transform);
         var vector = Quaternion.Euler(0, (float)bearing, 0) * Vector3.forward * distance;
         tmpPin.transform.position = vector;
 
