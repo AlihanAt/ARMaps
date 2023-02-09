@@ -293,6 +293,22 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1953866482}
+    - target: {fileID: 1560979785547029984, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560979785547029984, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1953866485}
+    - target: {fileID: 1560979785547029984, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InstantiatePinObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560979785547029984, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlaceObject, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1746981016940468563, guid: dfbcc610cb881904a897ee6321860006, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -745,7 +761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &773653916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -867,7 +883,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 744498745425902337, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
   m_PrefabInstance: {fileID: 4850451424076126824}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1846978351}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bb87916f59f52349b237e7ce66a84a1, type: 3}
@@ -1257,6 +1273,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1846978351 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8246964176879374782, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
+  m_PrefabInstance: {fileID: 4850451424076126824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1846978352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846978351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc30d98148eff704598a609c509a4a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1917899866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,6 +1331,7 @@ GameObject:
   - component: {fileID: 1953866483}
   - component: {fileID: 1953866482}
   - component: {fileID: 1953866484}
+  - component: {fileID: 1953866485}
   m_Layer: 0
   m_Name: GPS
   m_TagString: Untagged
@@ -1347,9 +1381,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapPinLayer: {fileID: 1439707746}
-  _gpsTracking: {fileID: 1953866482}
   _pinParent: {fileID: 1917899866}
   _pinObject: {fileID: 7876555658377548699, guid: ac7b2ed178026144f8938af39de3e99e, type: 3}
+  _smallMapPin: {fileID: 4290873802516834884, guid: b11eb5b5dea615a4185a9added4bb486, type: 3}
+--- !u!114 &1953866485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953866481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3cd70e4297d5143bd940af554759ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pinObject: {fileID: 7876555658377548699, guid: ac7b2ed178026144f8938af39de3e99e, type: 3}
+  _arSessionOrigin: {fileID: 240643287}
+  _pinParent: {fileID: 1917899866}
 --- !u!114 &2119838427 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2183414062625141605, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
@@ -1368,6 +1417,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 315063050, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
+      propertyPath: _gpsTracking
+      value: 
+      objectReference: {fileID: 1953866482}
     - target: {fileID: 1439707753, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
       propertyPath: _placeMapButton
       value: 

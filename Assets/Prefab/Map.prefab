@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 1273834948}
   - component: {fileID: 1273834947}
   - component: {fileID: 1854551981905462757}
-  - component: {fileID: 1273834949}
+  - component: {fileID: 315063050}
   - component: {fileID: 3426115576001047313}
   - component: {fileID: 4678581287776936978}
   - component: {fileID: 1439707753}
@@ -98,7 +98,7 @@ MonoBehaviour:
   _mapTerrainType: 0
   _mapShape: 1
   _localMapDimension: {x: 1, y: 1}
-  _localMapRadius: 1.5
+  _localMapRadius: 0.6
   _localMapBaseHeight: 0.1
   _elevationScale: 1
   _castShadows: 1
@@ -189,7 +189,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 0.1, z: 3}
+  m_Size: {x: 1.2, y: 0.1, z: 1.2}
   m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!114 &1273834946
 MonoBehaviour:
@@ -269,7 +269,8 @@ MonoBehaviour:
   _camera: {fileID: 0}
   _zoomSpeed: 0.5
   _panSmoothness: 0.5
---- !u!114 &1273834949
+  _gpsTracking: {fileID: 0}
+--- !u!114 &315063050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,10 +279,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1588239920756772207}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16b1021f9cb8215439219e0216e34c1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 942939b76e338174a95805d412c692fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
+  _gpsTracking: {fileID: 0}
 --- !u!114 &3426115576001047313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _editorHandler: {fileID: 1854551981905462757}
-  _touchHandler: {fileID: 1273834949}
+  _touchHandler: {fileID: 315063050}
 --- !u!1 &6898044784682855098
 GameObject:
   m_ObjectHideFlags: 0

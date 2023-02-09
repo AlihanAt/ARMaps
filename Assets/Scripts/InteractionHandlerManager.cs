@@ -1,12 +1,10 @@
 using Microsoft.Maps.Unity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractionHandlerManager : MonoBehaviour
 {
     [SerializeField] private MixedRealityMapInteractionHandler _editorHandler;
-    [SerializeField] private MapTouchInteractionHandler _touchHandler;
+    [SerializeField] private CustomMapTouchInteractionHandler _touchHandler;
 
     private void Start()
     {

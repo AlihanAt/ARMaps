@@ -1,3 +1,4 @@
+using Microsoft.Geospatial;
 using Microsoft.Maps.Unity;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,11 @@ using UnityEngine;
 public class PinManager : MonoBehaviour
 {
     [SerializeField] private MapPinLayer _mapPinLayer;
-    [SerializeField] private GPSTracking _gpsTracking;
     [SerializeField] private GameObject _pinParent;
     [SerializeField] private GameObject _pinObject;
-    
+    [SerializeField] private MapPin _smallMapPin;
+    private GPSTracking _gpsTracking;
+
     private List<MapPin> _pinInRangeList = new List<MapPin>();
     private Dictionary<MapPin, GameObject> _pinInRangeMap = new Dictionary<MapPin, GameObject>();
 
@@ -17,9 +19,10 @@ public class PinManager : MonoBehaviour
     private readonly float _resetTime = 0.1f;
     private float _time;
 
-    private void Awake()
+    private void Start()
     {
         _time = _resetTime;
+        _gpsTracking = GetComponent<GPSTracking>();
     }
 
     void Update()
@@ -81,5 +84,16 @@ public class PinManager : MonoBehaviour
         _pinInRangeMap.Remove(pin);
         Destroy(placedPinObject.gameObject);
         Debug.Log("Pin removed");
+    }
+
+    public void PlaceNewPin(GameObject placedPin)
+    {
+        var newPin = Instantiate(_smallMapPin);
+        newPin.Location = _gpsTracking.GetCurrentPosition();
+        _mapPinLayer.MapPins.Add(newPin);
+        placedPin.transform.parent = _pinParent.transform;
+
+        _pinInRangeList.Add(newPin);
+        _pinInRangeMap.Add(newPin, placedPin);
     }
 }

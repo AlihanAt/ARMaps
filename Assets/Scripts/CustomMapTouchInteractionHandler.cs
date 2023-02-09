@@ -20,6 +20,9 @@ namespace Microsoft.Maps.Unity
         private double _initialMapDimensionInMercator;
         private float _tapAndHoldBeginTime = float.MaxValue;
 
+        [SerializeField]
+        private GPSTracking _gpsTracking;
+
         private void Update()
         {
             var touchCount = Input.touchCount;
@@ -44,6 +47,8 @@ namespace Microsoft.Maps.Unity
             // A single touch point is a pan, a double-tap, or a tap-and-hold.
             if (touchCount == 1)
             {
+                _gpsTracking.FocusPlayer(false);
+
                 // Disable zoom with two touch points.
                 _initialTouchPointDelta = 0.0f;
 

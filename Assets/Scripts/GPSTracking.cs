@@ -63,7 +63,7 @@ public class GPSTracking : MonoBehaviour
             yield break;
         }
 
-        Input.location.Start(10, 10);
+        Input.location.Start(2, 2);
 
         int maxWait = 20;
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
@@ -167,6 +167,11 @@ public class GPSTracking : MonoBehaviour
             bearing += 360;
 
         return bearing;
+    }
+
+    public LatLon GetCurrentPosition()
+    {
+        return _currentPos;
     }
 
     void OnDisable()
