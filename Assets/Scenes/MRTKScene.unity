@@ -293,6 +293,10 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1953866482}
+    - target: {fileID: 1096226356395349287, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1560979785547029984, guid: dfbcc610cb881904a897ee6321860006, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -320,6 +324,10 @@ PrefabInstance:
     - target: {fileID: 2113668622888729042, guid: dfbcc610cb881904a897ee6321860006, type: 3}
       propertyPath: m_Name
       value: NearSettingsMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113668622888729042, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3445010261997386319, guid: dfbcc610cb881904a897ee6321860006, type: 3}
       propertyPath: m_RootOrder
@@ -397,6 +405,18 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1309578866}
+    - target: {fileID: 9186654360402290176, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: m_fontSize
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186654360402290176, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186654360402290176, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfbcc610cb881904a897ee6321860006, type: 3}
 --- !u!1 &105508049
@@ -889,6 +909,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb87916f59f52349b237e7ce66a84a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1091250478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2113668622888729042, guid: dfbcc610cb881904a897ee6321860006, type: 3}
+  m_PrefabInstance: {fileID: 69105461}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1175354382 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8494851948187920207, guid: dfbcc610cb881904a897ee6321860006, type: 3}
@@ -1399,6 +1424,7 @@ MonoBehaviour:
   _pinObject: {fileID: 7876555658377548699, guid: ac7b2ed178026144f8938af39de3e99e, type: 3}
   _arSessionOrigin: {fileID: 240643287}
   _pinParent: {fileID: 1917899866}
+  _menu: {fileID: 1091250478}
 --- !u!114 &2119838427 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2183414062625141605, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
@@ -1443,6 +1469,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2183414062625141605, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
       propertyPath: _center._longitude
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469732454616985372, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3469732454616985372, guid: 3c50ab745a25fe148a0807cf3dc3596a, type: 3}

@@ -11,7 +11,6 @@ public class MapToggle : MonoBehaviour
     [SerializeField] private Interactable _placeMapButton;
     [SerializeField] private Interactable _resizeMapButton;
 
-    // Start is called before the first frame update
     void Start()
     {
         this._mapRenderer = GetComponent<MapRenderer>();        
